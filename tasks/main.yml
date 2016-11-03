@@ -5,7 +5,7 @@
 #   service: name=firewalld state=stopped enabled=no
 
 - name: Upgrade all packages
-  yum: name=* state=latest
+  yum: name=* state=latest exclude=docker-engine
 
 - name: Install packages for data compression utilities
   yum: name={{ item }} state=present
@@ -43,7 +43,7 @@
   template: src=override.conf.j2 dest=/etc/systemd/system/docker.service.d/override.conf
 
 - name: Install the Docker engine
-  yum: name=docker-engine-1.11.2 state=latest
+  yum: name=docker-engine-1.11.2 state=present
 
 - name: Enable and start the Docker engine
   service: name=docker  enabled=yes state=started
